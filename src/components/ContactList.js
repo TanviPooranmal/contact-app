@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
   const [loading, setLoading] = useState(false);
