@@ -1,0 +1,25 @@
+/* src/App.css */
+.App {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+form input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.contact {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.contact img {
+  display: block;
+  margin-bottom: 10px;
+}
