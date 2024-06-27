@@ -1,3 +1,4 @@
+// src/components/ContactList.js
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
@@ -17,22 +18,32 @@ const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
       {loading && <div className="loader"></div>}
       <div>
         {contacts.map(contact => (
-          <div key={contact.id}>
-            <h3>{contact.name}</h3>
-            <p>{contact.phone}</p>
-            <p>{contact.email}</p>
-            <img src={contact.imageURL} alt={contact.name} width="100" />
-            <button onClick={() => setCurrentContact(contact)} disabled={loading}>
-              {loading ? 'Loading...' : 'Edit'}
+          <div key={contact.id} className="contact-item">
+            <div className="contact-avatar">
+          <img src={contact.imageURL} alt={contact.name} className="avatar-img" />
+        </div>
+        <h3 className="contact-name">{contact.name}</h3>
+        <p className="contact-info"><span role="img" aria-label="phone">📞</span> {contact.phone}</p>
+        <p className="contact-info"><span role="img" aria-label="email">📧</span> {contact.email}</p>
+            <button
+              onClick={() => setCurrentContact(contact)}
+              className="edit-button"
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : 'Edit'}
             </button>
-            <button onClick={() => handleDelete(contact.id)} disabled={loading}>
-              {loading ? 'Loading...' : 'Delete'}
+            <button
+              onClick={() => handleDelete(contact.id)}
+              className="delete-button"
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : 'Delete'}
             </button>
           </div>
         ))}
       </div>
     </div>
-  );
+  );  
 };
 
 export default ContactList;
