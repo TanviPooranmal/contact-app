@@ -13,6 +13,33 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
   const [loading, setLoading] = useState(false);
   const phoneInputRef = useRef(null);
   const intlTelInputRef = useRef(null); // Reference for intlTelInput instance
+
+  // Utility function to handle intlTelInput initialization
+  const initializeIntlTelInput = () => {
+    if (phoneInputRef.current) {
+      try {
+        intlTelInputRef.current = intlTelInput(phoneInputRef.current, {
+          initialCountry: 'in', // Set initial country code (optional)
+          separateDialCode: true, // Display country code separately (optional)
+          utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.1.0/build/js/utils.js', // Use a reliable CDN
+        });
+      } catch (error) {
+        console.error('Error initializing intlTelInput:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    initializeIntlTelInput();
+
+    // Cleanup function to destroy the intlTelInput instance on unmount
+    return () => {
+      if (intlTelInputRef.current) {
+        intlTelInputRef.current.destroy();
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (currentContact) {
       setName(currentContact.name || '');
@@ -30,21 +57,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
       intlTelInputRef.current?.setNumber(''); // Clear phone number input for new contacts
     }
   }, [currentContact]);
-  useEffect(() => {
-    const phoneInput = phoneInputRef.current;
-    if (phoneInput) {
-      intlTelInputRef.current = intlTelInput(phoneInput, {
-        initialCountry: 'in',
-        separateDialCode: true,
-        utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.8/build/js/utils.js',
-      });
-    }
-    return () => {
-      if (intlTelInputRef.current) {
-        intlTelInputRef.current.destroy();
-      }
-    };
-  }, []);
+
   useEffect(() => {
     if (currentContact) {
       // Scroll to the form when currentContact changes
@@ -58,7 +71,6 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
 
   // Extract full phone number with country code
   const phoneNumber = intlTelInputRef.current.getNumber();
-
   let imageURL = '';
   if (image) {
     const imageRef = ref(storage, `images/${image.name}`);
