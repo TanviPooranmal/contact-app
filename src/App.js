@@ -6,6 +6,7 @@ import ContactList from './components/ContactList';
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
+// LandingPage component
 const LandingPage = ({ showApp }) => {
   return (
     <main className="landing-page">
@@ -20,6 +21,7 @@ const LandingPage = ({ showApp }) => {
   );
 };
 
+// App component
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [currentContact, setCurrentContact] = useState(null);
@@ -45,6 +47,7 @@ const App = () => {
     setShowContacts(!showContacts);
   };
 
+  // Render the main app
   return (
     <div className="App">
       <header>
@@ -66,7 +69,7 @@ const App = () => {
           )}
         </main>
       ) : (
-        <LandingPage showApp={showApp} />
+        <LandingPage showApp={showApp} /> 
       )}
       {loading && (
         <div className="loader"></div> // Show loader during adding, updating, or deleting

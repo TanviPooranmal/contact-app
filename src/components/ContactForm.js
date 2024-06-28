@@ -6,13 +6,14 @@ import { db, storage } from '../firebase';
 import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
+// ContactForm component
 const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const phoneInputRef = useRef(null);
-  const intlTelInputRef = useRef(null); // Reference for intlTelInput instance
+  const intlTelInputRef = useRef(null);
 
   // Utility function to handle intlTelInput initialization
   const initializeIntlTelInput = () => {
@@ -21,14 +22,15 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
         intlTelInputRef.current = intlTelInput(phoneInputRef.current, {
           initialCountry: 'in', // Set initial country code (optional)
           separateDialCode: true, // Display country code separately (optional)
-          utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.1.0/build/js/utils.js', // Use a reliable CDN
-        });
+          utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.1.0/build/js/utils.js',
+        }); 
       } catch (error) {
-        console.error('Error initializing intlTelInput:', error);
+        console.error('Error initializing intlTelInput:', error); // Log any errors to the console
       }
     }
   };
 
+  // Initialize intlTelInput on component mount
   useEffect(() => {
     initializeIntlTelInput();
 
@@ -40,6 +42,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     };
   }, []);
 
+  // Set the phone number input value to the currentContact's phone number
   useEffect(() => {
     if (currentContact) {
       setName(currentContact.name || '');
@@ -58,13 +61,14 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     }
   }, [currentContact]);
 
+  // Scroll to the form when currentContact changes
   useEffect(() => {
     if (currentContact) {
-      // Scroll to the form when currentContact changes
       document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
     }
   }, [currentContact]);
 
+  // Handle form submission
   const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
@@ -78,6 +82,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     imageURL = await getDownloadURL(imageRef);
   }
 
+  // Save the contact to Firestore
   try {
     if (currentContact) {
       const contactRef = doc(db, 'contacts', currentContact.id);
@@ -109,14 +114,20 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
   }
 };
 
+  // Handle form reset
   const handleReset = () => {
     setName('');
     setEmail('');
     setImage(null);
-    setCurrentContact(null); // Clear current contact to ensure it's treated as a new addition
-    intlTelInputRef.current?.setNumber(''); // Clear phone number input
+    setCurrentContact(null);
+    intlTelInputRef.current?.setNumber('');
+    intlTelInputRef.current?.setCountry('in');
   };
+
+  // Set the submit button text based on whether the form is for adding or updating a contact
   const submitButtonText = currentContact ? 'Update Contact' : 'Add Contact';
+
+  // Render the form
   return (
     <div id="form-container" className="form-container">
       {loading && <div className="loader"></div>}
@@ -161,4 +172,6 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     </div>
   );
 };
+
+// Export the ContactForm component
 export default ContactForm;

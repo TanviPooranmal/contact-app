@@ -1,54 +1,65 @@
+/* base styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* Styling for app container */
 .App {
   text-align: center;
 }
 
+/* Styling for header */
 header {
   background-color: #000000;
   padding: 20px;
   color: white;
 }
 
+/* Styling for logo */
 header .logo {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Styling for logo image */
 header .logo img {
   width: 50px;
   margin-right: 20px;
 }
 
+/* Styling for navigation */
 main {
   padding: 20px;
 }
 
+/* Styling for hero section */
 .hero {
   padding: 100px 20px;
   background-color: #f5f5f5;
 }
 
+/* Styling for hero content */
 .hero .hero-content {
   max-width: 600px;
   margin: 0 auto;
 }
 
+/* Styling for hero content heading */
 .hero .hero-content h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
+/* Styling for hero content paragraph */
 .hero .hero-content p {
   font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
+/* Button styling */
 .hero .hero-content button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -105,6 +116,41 @@ main {
   background-color: #0056b3;
 }
 
+/* Styling for button-group */
+.button-group {
+  display: flex;
+  justify-content: center;
+}
+
+/* Submit button styling */
+.form-container .submit-btn {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: auto;
+}
+
+/* Reset button styling */
+.form-container .reset-btn {
+  background-color: red;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  flex: auto;
+}
+
+/* Button hover effect */
+.form-container .submit-btn:hover{
+  background-color: #3b853e;
+}
+
+/* Button hover effect */
+.form-container .reset-btn:hover {
+  background-color: darkred;
+}
+
 /* Error message styling */
 .error-message {
   color: red;
@@ -136,48 +182,22 @@ main {
   padding: 10px;
 }
 
+/* Specific styling for intl-tel-input elements */
 .form-container .iti {
   margin-bottom: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  text-align: left; /* Ensure placeholders are left-aligned */
+  text-align: left;
 }
 
-.button-group {
-  display: flex;
-  justify-content: center; /* Align buttons to the right */
-}
-.form-container .submit-btn {
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  flex: auto;
-}
-
-.form-container .reset-btn {
-  background-color: red;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  flex: auto;
-}
-
-.form-container .submit-btn:hover{
-  background-color: #3b853e;
-}
-.form-container .reset-btn:hover {
-  background-color: darkred;
-}
-
-/* Input styling for phone number */
+/* Input styling for country-code dropdown */
 .iti__selected-flag {
   border-radius: 4px 0 0 4px;
 }
 
+/* Input styling for phone number */
 .iti input {
   width: 100%;
   border-radius: 0 4px 4px 0;
@@ -185,10 +205,12 @@ main {
   box-sizing: border-box;
 }
 
+/* Override dropdown width */
 .iti__dropdown {
   width: 100%;
 }
 
+/* Styling for contact list */
 .edit-button{
   margin: 5px;
   padding: 8px 12px;
@@ -199,6 +221,8 @@ main {
   border-radius: 4px;
   font-size: 14px;
 }
+
+/* Button styling */
 .delete-button {
   margin: 5px;
   padding: 8px 12px;
@@ -210,13 +234,17 @@ main {
   font-size: 14px;
 }
 
+/* Button hover effect */
 .edit-button:hover{
   background-color: darkorange; /* Darker blue on hover */
 }
+
+/* Button hover effect */
 .delete-button:hover {
   background-color: darkred; /* Darker blue on hover */
 }
 
+/* Styling for contact list */
 .toggle-contacts-btn {
   margin: 20px;
   padding: 10px 20px;
@@ -228,10 +256,12 @@ main {
   border-radius: 5px;
 }
 
+/* Button hover effect */
 .toggle-contacts-btn:hover {
   background-color: #0056b3;
 }
 
+/* Styling for loader*/
 .loader {
   position: fixed;
   top: 50%;
@@ -248,22 +278,26 @@ main {
   z-index: 9999;
 }
 
+/* Keyframes for loader animation */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
+/* Styling for contact list */
 .contact {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
 }
 
+/* Styling for contact image */
 .contact img {
   display: block;
   margin-bottom: 10px;
 }
 
+/* Styling for contact name */
 .contacts-container {
   display: flex;
   justify-content: center; /* Center horizontally */
@@ -271,6 +305,7 @@ main {
   margin-top: 20px;
 }
 
+/* Styling for contact item */
 .contact-item {
   background-color: #ffffff; /* White background */
   padding: 20px;
@@ -281,10 +316,12 @@ main {
   border-style: solid;
 }
 
+/* Styling for contact avatar */
 .contact-avatar {
   margin-bottom: 10px;
 }
 
+/* Styling for contact name */
 .avatar-img {
   width: 120px;
   height: 120px;
@@ -292,11 +329,13 @@ main {
   border: 2px solid black; /* Blue border */
 }
 
+/* Styling for contact name */
 .contact-name {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
+/* Styling for contact info */
 .contact-info {
   margin-bottom: 5px;
   color: black; /* Black text */

@@ -4,9 +4,13 @@ import { db, storage } from '../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
 
+// ContactList component
 const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
+  
+  // State to manage loading status
   const [loading, setLoading] = useState(false);
 
+  // Function to delete a contact
   const handleDelete = async (contact) => {
     setLoading(true);
 
@@ -26,6 +30,7 @@ const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
     fetchContacts();
   };
 
+  // Render the list of contacts
   return (
     <div className="loader-container">
       {loading && <div className="loader"></div>}
@@ -56,7 +61,8 @@ const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
         ))}
       </div>
     </div>
-  );  
+  );
 };
 
+// Export the ContactList component
 export default ContactList;
