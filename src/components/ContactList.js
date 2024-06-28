@@ -34,32 +34,46 @@ const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
   return (
     <div className="loader-container">
       {loading && <div className="loader"></div>}
-      <div>
-        {contacts.map(contact => (
-          <div key={contact.id} className="contact-item">
-            <div className="contact-avatar">
-              <img src={contact.imageURL} alt={contact.name} className="avatar-img" />
+      {contacts.length === 0 ? (
+        <p>No contacts available.</p>
+      ) : (
+        <div>
+          {contacts.map((contact) => (
+            <div key={contact.id} className="contact-item">
+              <div className="contact-avatar">
+                <img src={contact.imageURL} alt={contact.name} className="avatar-img" />
+              </div>
+              <h3 className="contact-name">{contact.name}</h3>
+              <p className="contact-info">
+                <span role="img" aria-label="phone">
+                  📞
+                </span>{' '}
+                {contact.phone}
+              </p>
+              <p className="contact-info">
+                <span role="img" aria-label="email">
+                  📧
+                </span>{' '}
+                {contact.email}
+              </p>
+              <button
+                onClick={() => setCurrentContact(contact)}
+                className="edit-button"
+                disabled={loading}
+              >
+                {loading ? 'Processing...' : 'Edit'}
+              </button>
+              <button
+                onClick={() => handleDelete(contact)}
+                className="delete-button"
+                disabled={loading}
+              >
+                {loading ? 'Processing...' : 'Delete'}
+              </button>
             </div>
-            <h3 className="contact-name">{contact.name}</h3>
-            <p className="contact-info"><span role="img" aria-label="phone">📞</span> {contact.phone}</p>
-            <p className="contact-info"><span role="img" aria-label="email">📧</span> {contact.email}</p>
-            <button
-              onClick={() => setCurrentContact(contact)}
-              className="edit-button"
-              disabled={loading}
-            >
-              {loading ? 'Processing...' : 'Edit'}
-            </button>
-            <button
-              onClick={() => handleDelete(contact)}
-              className="delete-button"
-              disabled={loading}
-            >
-              {loading ? 'Processing...' : 'Delete'}
-            </button>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

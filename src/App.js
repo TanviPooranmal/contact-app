@@ -78,4 +78,5 @@ const App = () => {
   );
 };
 
+// Export the App component
 export default App;
