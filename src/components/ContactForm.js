@@ -12,6 +12,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
   const [email, setEmail] = useState('');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const phoneInputRef = useRef(null);
   const intlTelInputRef = useRef(null);
 
@@ -20,12 +21,12 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     if (phoneInputRef.current) {
       try {
         intlTelInputRef.current = intlTelInput(phoneInputRef.current, {
-          initialCountry: 'in', // Set initial country code (optional)
-          separateDialCode: true, // Display country code separately (optional)
+          initialCountry: 'in',
+          separateDialCode: true,
           utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.1.0/build/js/utils.js',
-        }); 
+        });
       } catch (error) {
-        console.error('Error initializing intlTelInput:', error); // Log any errors to the console
+        console.error('Error initializing intlTelInput:', error);
       }
     }
   };
@@ -57,7 +58,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     } else {
       setName('');
       setEmail('');
-      intlTelInputRef.current?.setNumber(''); // Clear phone number input for new contacts
+      intlTelInputRef.current?.setNumber('');
     }
   }, [currentContact]);
 
@@ -68,51 +69,72 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     }
   }, [currentContact]);
 
+  /// Validate the form fields
+  const validate = () => {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = 'Name is required.';
+    if (!email) {
+      newErrors.email = 'Email is required.';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email is invalid.';
+    }
+    if (!intlTelInputRef.current.isValidNumber()) {
+      newErrors.phone = 'Phone number is invalid.';
+    }
+    if (image && !image.type.startsWith('image/')) {
+      newErrors.image = 'Selected file must be an image.';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    if (!validate()) {
+      return;
+    }
+    setLoading(true);
 
-  // Extract full phone number with country code
-  const phoneNumber = intlTelInputRef.current.getNumber();
-  let imageURL = '';
-  if (image) {
-    const imageRef = ref(storage, `images/${image.name}`);
-    await uploadBytes(imageRef, image);
-    imageURL = await getDownloadURL(imageRef);
-  }
-
-  // Save the contact to Firestore
-  try {
-    if (currentContact) {
-      const contactRef = doc(db, 'contacts', currentContact.id);
-      await updateDoc(contactRef, {
-        name,
-        phone: phoneNumber,
-        email,
-        imageURL: imageURL || currentContact.imageURL,
-      });
-      setCurrentContact(null);
-    } else {
-      await addDoc(collection(db, 'contacts'), {
-        name,
-        phone: phoneNumber,
-        email,
-        imageURL,
-      });
+    // Get the phone number in E.164 format
+    const phoneNumber = intlTelInputRef.current.getNumber();
+    let imageURL = '';
+    if (image) {
+      const imageRef = ref(storage, `images/${image.name}`);
+      await uploadBytes(imageRef, image);
+      imageURL = await getDownloadURL(imageRef);
     }
 
-    setName('');
-    setEmail('');
-    setImage(null);
-    setLoading(false);
-    fetchContacts();
-  } catch (error) {
-    console.error("Error saving contact:", error);
-    // Handle the error here, maybe show an error message to the user
-    setLoading(false);
-  }
-};
+    // Save the contact to Firestore
+    try {
+      if (currentContact) {
+        const contactRef = doc(db, 'contacts', currentContact.id);
+        await updateDoc(contactRef, {
+          name,
+          phone: phoneNumber,
+          email,
+          imageURL: imageURL || currentContact.imageURL,
+        });
+        setCurrentContact(null);
+      } else {
+        await addDoc(collection(db, 'contacts'), {
+          name,
+          phone: phoneNumber,
+          email,
+          imageURL,
+        });
+      }
+
+      setName('');
+      setEmail('');
+      setImage(null);
+      fetchContacts();
+    } catch (error) {
+      console.error("Error saving contact:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Handle form reset
   const handleReset = () => {
@@ -122,6 +144,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     setCurrentContact(null);
     intlTelInputRef.current?.setNumber('');
     intlTelInputRef.current?.setCountry('in');
+    setErrors({});
   };
 
   // Set the submit button text based on whether the form is for adding or updating a contact
@@ -132,42 +155,58 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     <div id="form-container" className="form-container">
       {loading && <div className="loader"></div>}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-          required
-        />
-        <input
-          ref={phoneInputRef}
-          type="tel"
-          id="phone"
-          className="form-control"
-          placeholder="Phone Number"
-          name="phone"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-          accept="image/*"
-        />
-        <div className="button-group">
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Processing...' : submitButtonText}
-          </button>
-          <button type="button" className="reset-btn" onClick={handleReset}>
-            Reset
-          </button>
+        <div className="form-group">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            required
+          />
+          {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
+        <div className="form-group">
+          <input
+            ref={phoneInputRef}
+            type="tel"
+            id="phone"
+            className="form-control"
+            placeholder="Phone Number"
+            name="phone"
+            required
+          />
+          {errors.phone && <p className="error-message">{errors.phone}</p>}
+        </div>
+        <div className="form-group">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          {errors.email && <p className="error-message">{errors.email}</p>}
+        </div>
+        <div className="form-group">
+          <input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+            accept="image/*"
+          />
+          {errors.image && <p className="error-message">{errors.image}</p>}
+        </div>
+        <div className="button-group">
+  <div className="button-row">
+    <button type="submit" className="submit-btn" disabled={loading}>
+      {loading ? 'Processing...' : submitButtonText}
+    </button>
+  </div>
+  <div className="button-row">
+    <button type="button" className="reset-btn" onClick={handleReset}>
+      Reset
+    </button>
+  </div>
+</div>
       </form>
     </div>
   );

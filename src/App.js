@@ -59,7 +59,7 @@ const App = () => {
       {showMainApp ? (
         <main>
           <div className="form-container">
-            <ContactForm fetchContacts={fetchContacts} currentContact={currentContact} setCurrentContact={setCurrentContact} />
+          <ContactForm fetchContacts={fetchContacts} currentContact={currentContact} setCurrentContact={setCurrentContact} />
           </div>
           <button onClick={toggleContacts} className="toggle-contacts-btn">
             {showContacts ? 'Hide Contacts' : 'Show Contacts'}

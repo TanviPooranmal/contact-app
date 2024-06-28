@@ -96,6 +96,7 @@ main {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 /* Specific padding for file input */
@@ -116,10 +117,17 @@ main {
   background-color: #0056b3;
 }
 
-/* Styling for button-group */
 .button-group {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Arrange buttons in a column */
+  align-items: center; /* Center-align buttons horizontally */
+}
+
+.button-row {
+  width: 100%; /* Each row takes full width of button-group */
+  display: flex;
+  justify-content: center; /* Center-align buttons horizontally within each row */
+  margin-bottom: 0px; /* Adjust margin between rows if needed */
 }
 
 /* Submit button styling */
@@ -128,8 +136,8 @@ main {
   color: #fff;
   border: none;
   cursor: pointer;
+  padding: 10px 20px; /* Adjust padding for button size */
   transition: background-color 0.3s ease;
-  flex: auto;
 }
 
 /* Reset button styling */
@@ -138,11 +146,11 @@ main {
   color: #fff;
   border: none;
   cursor: pointer;
-  flex: auto;
+  padding: 10px 20px; /* Adjust padding for button size */
 }
 
 /* Button hover effect */
-.form-container .submit-btn:hover{
+.form-container .submit-btn:hover {
   background-color: #3b853e;
 }
 
@@ -155,7 +163,7 @@ main {
 .error-message {
   color: red;
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 /* Flex layout for phone input and country code */
@@ -203,6 +211,7 @@ main {
   border-radius: 0 4px 4px 0;
   padding-left: 50px;
   box-sizing: border-box;
+  text-align: left;
 }
 
 /* Override dropdown width */
@@ -232,16 +241,6 @@ main {
   cursor: pointer;
   border-radius: 4px;
   font-size: 14px;
-}
-
-/* Button hover effect */
-.edit-button:hover{
-  background-color: darkorange; /* Darker blue on hover */
-}
-
-/* Button hover effect */
-.delete-button:hover {
-  background-color: darkred; /* Darker blue on hover */
 }
 
 /* Styling for contact list */
@@ -339,4 +338,9 @@ main {
 .contact-info {
   margin-bottom: 5px;
   color: black; /* Black text */
+}
+
+.error {
+  color: red;
+  font-size: 0.875em;
 }

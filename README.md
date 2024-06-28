@@ -1,28 +1,52 @@
-# Getting Started with Contact Manager
+## Contact Manager: Organize Your Contacts with Ease
 
-A simple and intuitive way to organize and stay connected with your contacts.
+This React application provides a simple and intuitive way to manage your contacts. 
 
-> [!NOTE]
-> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Features:**
 
-## Available Scripts
+* Add new contacts with name, phone number, email, and optional profile picture.
+* Edit existing contacts.
+* Validate contact information to ensure accuracy.
 
-In the project directory, you can run:
+**Getting Started**
 
-### `npm start`
+1. **Clone the repository:**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+   ```bash
+   git clone https://github.com/TanviPooranmal/contact-app.git
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Install dependencies:**
 
-### `npm run build`
+   ```bash
+   cd contact-manager
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Run the development server:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   This will start the application at http://localhost:3000 in your browser.
+
+4. **Build for production:**
+
+   ```bash
+   npm run build
+   ```
+
+   This will create an optimized production build in the `build` folder.
+
+**Deployment**
+
+You can deploy this application to any static hosting platform like Netlify, Vercel, or Firebase Hosting. Follow the specific instructions for your chosen platform.
+
+**Live Demo**
+
+See the Contact Manager in action: [Contact Manager](https://main--inquisitive-monstera-f1b5fb.netlify.app/)
+
+**Additional Notes**
+
+* This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
