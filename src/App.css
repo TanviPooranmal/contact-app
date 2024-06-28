@@ -340,6 +340,7 @@ main {
   color: black; /* Black text */
 }
 
+/* Styling for error message */
 .error {
   color: red;
   font-size: 0.875em;
