@@ -6,7 +6,7 @@ import { ref, deleteObject } from 'firebase/storage';
 
 // ContactList component
 const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
-  
+
   // State to manage loading status
   const [loading, setLoading] = useState(false);
 
