@@ -45,7 +45,7 @@ You can deploy this application to any static hosting platform like Netlify, Ver
 
 **Live Demo**
 
-See the Contact Manager in action: [Contact Manager](https://main--inquisitive-monstera-f1b5fb.netlify.app/)
+See the Contact Manager in action: [Contact Manager](https://667e6f12d1f6b000088d6750--inquisitive-monstera-f1b5fb.netlify.app/)
 
 **Additional Notes**
 
