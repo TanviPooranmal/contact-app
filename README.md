@@ -19,7 +19,7 @@ This React application provides a simple and intuitive way to manage your contac
 2. **Install dependencies:**
 
    ```bash
-   cd contact-manager
+   cd contact-app
    npm install
    ```
 
