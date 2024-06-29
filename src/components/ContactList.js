@@ -47,14 +47,13 @@ const ContactList = ({ contacts, fetchContacts, setCurrentContact }) => {
               <p className="contact-info">
                 <span role="img" aria-label="phone">
                   📞
-                </span>{' '}
-                {contact.phone}
+                </span><a href={`tel:${contact.phone}`}>{contact.phone}</a>
               </p>
               <p className="contact-info">
                 <span role="img" aria-label="email">
                   📧
-                </span>{' '}
-                {contact.email}
+                </span><a href={`mailto:${contact.email}`}>{contact.email}</a>
+
               </p>
               <button
                 onClick={() => setCurrentContact(contact)}
