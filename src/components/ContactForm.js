@@ -15,6 +15,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
   const [errors, setErrors] = useState({});
   const phoneInputRef = useRef(null);
   const intlTelInputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   // Utility function to handle intlTelInput initialization
   const initializeIntlTelInput = () => {
@@ -125,9 +126,7 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
         });
       }
 
-      setName('');
-      setEmail('');
-      setImage(null);
+      handleReset();
       fetchContacts();
     } catch (error) {
       console.error("Error saving contact:", error);
@@ -145,6 +144,12 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
     intlTelInputRef.current?.setNumber('');
     intlTelInputRef.current?.setCountry('in');
     setErrors({});
+    if (intlTelInputRef.current) {
+      intlTelInputRef.current.value = ''; // Reset the phone number input
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   // Set the submit button text based on whether the form is for adding or updating a contact
@@ -158,10 +163,12 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
         <div className="form-group">
           <input
             type="text"
+            id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
             required
+            autoComplete="name" // Add autocomplete attribute
           />
           {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
@@ -174,39 +181,45 @@ const ContactForm = ({ currentContact, fetchContacts, setCurrentContact }) => {
             placeholder="Phone Number"
             name="phone"
             required
+            autoComplete="tel" // Add autocomplete attribute
           />
           {errors.phone && <p className="error-message">{errors.phone}</p>}
         </div>
         <div className="form-group">
           <input
             type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
+            autoComplete="email" // Add autocomplete attribute
           />
           {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
         <div className="form-group">
           <input
             type="file"
-            onChange={(e) => setImage(e.target.files[0])}
+            id="image"
+            ref={fileInputRef}
             accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            autoComplete="off" // Typically, file inputs should have autocomplete="off"
           />
           {errors.image && <p className="error-message">{errors.image}</p>}
         </div>
         <div className="button-group">
-  <div className="button-row">
-    <button type="submit" className="submit-btn" disabled={loading}>
-      {loading ? 'Processing...' : submitButtonText}
-    </button>
-  </div>
-  <div className="button-row">
-    <button type="button" className="reset-btn" onClick={handleReset}>
-      Reset
-    </button>
-  </div>
-</div>
+          <div className="button-row">
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? 'Processing...' : submitButtonText}
+            </button>
+          </div>
+          <div className="button-row">
+            <button type="button" className="reset-btn" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

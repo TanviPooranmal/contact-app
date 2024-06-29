@@ -59,7 +59,7 @@ const App = () => {
       {showMainApp ? (
         <main>
           <div className="form-container">
-          <ContactForm fetchContacts={fetchContacts} currentContact={currentContact} setCurrentContact={setCurrentContact} />
+            <ContactForm fetchContacts={fetchContacts} currentContact={currentContact} setCurrentContact={setCurrentContact} />
           </div>
           <button onClick={toggleContacts} className="toggle-contacts-btn">
             {showContacts ? 'Hide Contacts' : 'Show Contacts'}
@@ -69,7 +69,7 @@ const App = () => {
           )}
         </main>
       ) : (
-        <LandingPage showApp={showApp} /> 
+        <LandingPage showApp={showApp} />
       )}
       {loading && (
         <div className="loader"></div> // Show loader during adding, updating, or deleting
