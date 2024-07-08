@@ -1,6 +1,11 @@
 ## Contact Manager: Organize Your Contacts with Ease
 
+[![Archived](https://img.shields.io/badge/status-archived-red)]()
+
 This React application provides a simple and intuitive way to manage your contacts. 
+
+> [!IMPORTANT]
+> This repository has been archived and is no longer actively maintained. You can still fork the project, view the code, and use it for your own purposes, but no further updates or support will be provided.
 
 **Features:**
 
